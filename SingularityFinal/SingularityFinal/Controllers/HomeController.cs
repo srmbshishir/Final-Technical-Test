@@ -36,6 +36,24 @@ namespace SingularityFinal.Controllers
         {
             return Json(context.Lists.ToList(), JsonRequestBehavior.AllowGet);
         }
+
+        [HttpPost]
+        public JsonResult UpdateData(List p)
+        {
+                var oldp = context.Lists.SingleOrDefault(e => e.id == p.id);
+                oldp.name = p.name;
+                oldp.price = p.price;
+                context.SaveChanges();
+                return Json(new { success = true }); 
+        }
+        [HttpPost]
+        public JsonResult AddData(List u)
+        {
+            context.Lists.Add(u);
+            context.SaveChanges();
+            return Json(new { success = true });
+
+        }
     }
 
 }

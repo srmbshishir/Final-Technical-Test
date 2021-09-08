@@ -7,10 +7,11 @@
       <Schema Namespace="FinalTechnicalTestModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="List">
           <Key>
-            <PropertyRef Name="name" />
+            <PropertyRef Name="id" />
           </Key>
           <Property Name="name" Type="nchar" MaxLength="50" Nullable="false" />
-          <Property Name="price" Type="float" />
+          <Property Name="price" Type="float" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityContainer Name="FinalTechnicalTestModelStoreContainer">
           <EntitySet Name="List" EntityType="Self.List" Schema="dbo" store:Type="Tables" />
@@ -22,10 +23,11 @@
       <Schema Namespace="FinalTechnicalTestModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="List">
           <Key>
-            <PropertyRef Name="name" />
+            <PropertyRef Name="id" />
           </Key>
           <Property Name="name" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="price" Type="Double" />
+          <Property Name="price" Type="Double" Nullable="false" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
         <EntityContainer Name="FinalTechnicalTestEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Lists" EntityType="Self.List" />
@@ -41,6 +43,7 @@
               <MappingFragment StoreEntitySet="List">
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

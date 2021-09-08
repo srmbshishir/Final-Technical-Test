@@ -2,10 +2,11 @@
 <Schema Namespace="FinalTechnicalTestModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityType Name="List">
     <Key>
-      <PropertyRef Name="name" />
+      <PropertyRef Name="id" />
     </Key>
     <Property Name="name" Type="nchar" MaxLength="50" Nullable="false" />
-    <Property Name="price" Type="float" />
+    <Property Name="price" Type="float" Nullable="false" />
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
   </EntityType>
   <EntityContainer Name="FinalTechnicalTestModelStoreContainer">
     <EntitySet Name="List" EntityType="Self.List" Schema="dbo" store:Type="Tables" />

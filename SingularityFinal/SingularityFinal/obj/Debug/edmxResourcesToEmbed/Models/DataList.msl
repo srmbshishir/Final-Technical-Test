@@ -6,6 +6,7 @@
         <MappingFragment StoreEntitySet="List">
           <ScalarProperty Name="name" ColumnName="name" />
           <ScalarProperty Name="price" ColumnName="price" />
+          <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

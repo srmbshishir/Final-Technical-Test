@@ -9,8 +9,11 @@
 </div>
 <table class="table table-bordered" id="my-table">
     <tr>
+        <th width="10%">Id</th>
         <th width="35%">Name</th>
         <th width="25%">Price</th>
+        <th width="10%">Action</th>
+        <th width="10%">Action</th>
         <th width="10%">Action</th>
     </tr>
 
@@ -30,8 +33,9 @@
                         count += 1;
                         console.log(count);
                         var html_code = "<tr id='row" + count + "'>";
-                        html_code += "<td class='name'>" + item.name + "</td>";
-                        html_code += "<td class='price'>" + item.price + "</td>";
+                        html_code += "<td class='id' id='id" + count + "'>" + item.id + "</td>";
+                        html_code += "<td class='name' id='name" + count + "'>" + item.name + "</td>";
+                        html_code += "<td class='price' id='price" + count + "'>" + item.price + "</td>";
                         html_code += "<td><button type='button' id='edit" + count + "' name='edit' data-row='row" + count + "' class='btn btn-primary edit'>Edit</button></td>";
                         html_code += "<td><button type='button' style='display:none;' id='update" + count + "' name='update' data-row='row" + count + "' class='btn btn-primary update'>Update</button></td>";
                         html_code += "<td><button type='button' style='display:none;' id='cancel" + count + "' name='cancel' data-row='row" + count + "' class='btn btn-danger cancel'>Cancel</button></td>";
@@ -39,19 +43,20 @@
 
                         $('#my-table').append(html_code);
                     });
-                
+
                 }
             })
-           
+
             $('#add').click(function () {
                 console.log("hello");
                 count += 1;
                 var html_code = "<tr id='row" + count + "'>";
-                html_code += "<td contenteditable='true' class='name'></td>";
-                html_code += "<td contenteditable='true' class='price'></td>";
-                html_code += "<td><button type='button' name='remove' data-row='row" + count + "' class='btn btn-danger remove'>Delete</button></td>";
+                html_code += "<td contenteditable='false' class='id'>Auto</td>";
+                html_code += "<td contenteditable='true' id='name" + count + "' class='name'></td>";
+                html_code += "<td contenteditable='true' id='price" + count + "' class='price'></td>";
+                html_code += "<td><button type='button' name='insert' id='insert" + count + "' data-row='row" + count + "' class='btn btn-success insert'>Insert</button></td>";
+                html_code += "<td><button type='button' name='remove' data-row='row" + count + "' class='btn btn-danger remove'>Cancel</button></td>";
                 html_code += "</tr>";
-
                 $('#my-table').append(html_code);
             });
             $(document).on('click', '.remove', function () {
@@ -62,7 +67,13 @@
             $(document).on('click', '.edit', function () {
                 console.log("hello");
                 var edit_row = $(this).data("row");
-                $('#' + edit_row).attr('contenteditable', 'true');
+
+                //$('#' + edit_row).attr('contenteditable', 'true');
+
+                var number1 = $(this).closest('.edit').attr('id').split('t')[1];
+                $('#name' + number1).attr('contenteditable', 'true');
+                $('#price' + number1).attr('contenteditable', 'true');
+
                 $('#' + this.id).hide();
                 var number = $(this).closest('.edit').attr('id').split('t')[1];
                 $('#cancel' + number).show();
@@ -71,13 +82,80 @@
             $(document).on('click', '.cancel', function () {
                 console.log("cancel");
                 var cancel_row = $(this).data("row");
-                $('#' + cancel_row).attr('contenteditable', 'false');
+
                 $('#' + this.id).hide();
-                var number1 = $(this).closest('.cancel').attr('id').split('t')[1];
+                var number1 = $(this).closest('.cancel').attr('id').split('l')[1];
+                $('#name' + number1).attr('contenteditable', 'false');
+                $('#price' + number1).attr('contenteditable', 'false');
                 console.log(number1);
                 $('#update' + number1).hide();
                 $('#edit' + number1).show();
+
             });
+            $(document).on('click', '.update', function () {
+                var number1 = $(this).closest('.update').attr('id').split('e')[1];
+                var product = {
+                    id: $('#id' + number1).text(),
+                    name: $('#name' + number1).text(),
+                    price: $('#price' + number1).text()
+                }
+
+                console.log(product);
+                $.ajax({
+                    type: "POST",
+                    url: "/Home/UpdateData",
+                    data: product,
+                    success: function (response) {
+                        console.log(response);
+                        alert("Updated!");
+                    }
+                });
+                $('#' + this.id).hide();
+                $('#cancel' + number1).hide();
+                $('#edit' + number1).show();
+                $('#name' + number1).attr('contenteditable', 'false');
+                $('#price' + number1).attr('contenteditable', 'false');
+
+            })
+            $(document).on('click', '.insert', function () {
+                var number1 = $(this).closest('.insert').attr('id').split('t')[1];
+                console.log(count);
+                if ($('#name' + number1).text() == "" || $('#price' + number1).text() == "") {
+                    alert("Fill up all fields");
+                }
+                else {
+                    var product = {
+                        id: count + 24,
+                        name: $('#name' + number1).text(),
+                        price: $('#price' + number1).text()
+                    }
+                    console.log(product);
+                    $.ajax({
+                        type: "POST",
+                        url: "/Home/AddData",
+                        data: product,
+                        success: function (response) {
+                            console.log(response);
+                            alert("Added!");
+
+
+                            var html_code = "<tr id='row" + count + "'>";
+                            html_code += "<td class='id' id='id" + count + "'>" + product.id + "</td>";
+                            html_code += "<td class='name' id='name" + count + "'>" + product.name + "</td>";
+                            html_code += "<td class='price' id='price" + count + "'>" + product.price + "</td>";
+                            html_code += "<td><button type='button' id='edit" + count + "' name='edit' data-row='row" + count + "' class='btn btn-primary edit'>Edit</button></td>";
+                            html_code += "<td><button type='button' style='display:none;' id='update" + count + "' name='update' data-row='row" + count + "' class='btn btn-primary update'>Update</button></td>";
+                            html_code += "<td><button type='button' style='display:none;' id='cancel" + count + "' name='cancel' data-row='row" + count + "' class='btn btn-danger cancel'>Cancel</button></td>";
+                            html_code += "</tr>";
+
+                            $('#my-table').append(html_code);
+                        }
+                    });
+                    var delete_row = $(this).data("row");
+                    $('#' + delete_row).remove();
+                }
+             })
+        
         });
     </script>
 }

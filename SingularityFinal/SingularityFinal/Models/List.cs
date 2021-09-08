@@ -15,6 +15,7 @@ namespace SingularityFinal.Models
     public partial class List
     {
         public string name { get; set; }
-        public Nullable<double> price { get; set; }
+        public double price { get; set; }
+        public int id { get; set; }
     }
 }
