@@ -7,7 +7,7 @@ task2 :
 A chart will appear showing the monthly income of two companies. Mouse pointer over a company name will show that line curve of that company. On the top right corner, there is a menu button. Clicking it will give many options. Choosing 'Download Pdf' option will download the line chart as pdf.
 
 rdlc-tried but failed:
-Tried to make a rdlc report using report viewer but there occurs several errors. First the report option was not coming so had to download rdlc. Then report viewer was not coming in toolbox, so had to install nuget packages and add it to component list manually. But due to version incompatibility, data source was not coming in report viewer. So changed the version of rdlc manually in xml file but reached deadend for the datasource id option. Tried several options. Also tried to bind data manually but failed.
+Tried to make a RDLC report using report viewer but there occurs several errors. First the report option was not coming so had to download rdlc. Then report viewer was not coming in toolbox, so had to install nuget packages and add it to component list manually. But due to version incompatibility, data source was not coming in report viewer. So changed the version of RDLC manually in xml file but reached deadend for the datasource id option. Tried several options. Also tried to bind data manually but failed.
 
 Please run the solution file of task1 and task2 for better evaluation.
 Thank you.
